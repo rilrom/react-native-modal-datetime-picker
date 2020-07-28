@@ -40,6 +40,11 @@ export class DateTimePickerModal extends React.PureComponent {
       this.props.onHide(false);
       return;
     }
+    if (event.type === "neutralButtonPressed") {
+      this.props.onClear();
+      this.props.onHide(false);
+      return;
+    }
     if (this.props.mode === "datetime") {
       if (this.state.currentMode === "date") {
         this.currentDate = new Date(date);
