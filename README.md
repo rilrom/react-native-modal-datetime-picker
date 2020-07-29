@@ -80,8 +80,10 @@ export default Example;
 | Name                    | Type      | Default       | Description                                                                                     |
 | ----------------------- | --------- | ------------- | ----------------------------------------------------------------------------------------------- |
 | cancelTextIOS           | string    | 'Cancel'      | The label of the cancel button (iOS)                                                            |
+| clearTextIOS            | string    | 'Clear'       | The label of the clear button (iOS)                                                             |
 | confirmTextIOS          | string    | 'Confirm'     | The label of the confirm button (iOS)                                                           |
 | customCancelButtonIOS   | component |               | Overrides the default cancel button component (iOS)                                             |
+| customClearButtonIOS    | component |               | Overrides the default clear button component (iOS)                                              |
 | customConfirmButtonIOS  | component |               | Overrides the default confirm button component (iOS)                                            |
 | customHeaderIOS         | component |               | Overrides the default header component (iOS)                                                    |
 | customPickerIOS         | component |               | Overrides the default native picker component (iOS)                                             |
@@ -94,8 +96,8 @@ export default Example;
 | mode                    | string    | "date"        | Choose between 'date', 'time', and 'datetime'                                                   |
 | onCancel                | func      | **REQUIRED**  | Function called on dismiss                                                                      |
 | onConfirm               | func      | **REQUIRED**  | Function called on date or time picked. It returns the date or time as a JavaScript Date object |
+| onClear                 | func      | **REQUIRED**  | Function called on clear                                                                        |
 | onHide                  | func      | () => null    | Called after the hide animation                                                                 |
-| onClear                 | func      | () => null    | Function called on clear (Android)                                                              |
 | pickerContainerStyleIOS | style     |               | The style of the picker container (iOS)                                                         |
 
 👉Please notice that **all the [`@react-native-community/react-native-datetimepicker`](https://github.com/react-native-community/react-native-datetimepicker) props are also supported**!
