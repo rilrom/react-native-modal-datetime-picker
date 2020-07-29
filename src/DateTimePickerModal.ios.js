@@ -102,7 +102,7 @@ export class DateTimePickerModal extends React.PureComponent {
   render() {
     const {
       cancelTextIOS,
-      customTextIOS,
+      clearTextIOS,
       confirmTextIOS,
       customCancelButtonIOS,
       customClearButtonIOS,
