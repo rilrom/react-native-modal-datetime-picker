@@ -76,6 +76,7 @@ export class DateTimePickerModal extends React.PureComponent {
         mode={currentMode}
         value={date}
         onChange={this.handleChange}
+        neutralButtonLabel="clear"
       />
     );
   }
