@@ -7,6 +7,7 @@ export class DateTimePickerModal extends React.PureComponent {
     date: PropTypes.instanceOf(Date),
     isVisible: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
+    onClear: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onHide: PropTypes.func,
     maximumDate: PropTypes.instanceOf(Date),
