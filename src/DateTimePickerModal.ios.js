@@ -20,8 +20,10 @@ export const TITLE_COLOR = "#8f8f8f";
 export class DateTimePickerModal extends React.PureComponent {
   static propTypes = {
     cancelTextIOS: PropTypes.string,
+    clearTextIOS: PropTypes.string,
     confirmTextIOS: PropTypes.string,
     customCancelButtonIOS: PropTypes.elementType,
+    customClearButtonIOS: PropTypes.elementType,
     customConfirmButtonIOS: PropTypes.elementType,
     customHeaderIOS: PropTypes.elementType,
     customPickerIOS: PropTypes.elementType,
@@ -33,6 +35,7 @@ export class DateTimePickerModal extends React.PureComponent {
     isVisible: PropTypes.bool,
     pickerContainerStyleIOS: PropTypes.any,
     onCancel: PropTypes.func.isRequired,
+    onClear: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onChange: PropTypes.func,
     onHide: PropTypes.func,
@@ -42,6 +45,7 @@ export class DateTimePickerModal extends React.PureComponent {
 
   static defaultProps = {
     cancelTextIOS: "Cancel",
+    clearTextIOS: "Clear",
     confirmTextIOS: "Confirm",
     headerTextIOS: "Pick a date",
     modalPropsIOS: {},
@@ -70,6 +74,11 @@ export class DateTimePickerModal extends React.PureComponent {
     this.props.onCancel();
   };
 
+  handleClear = () => {
+    this.didPressConfirm = false;
+    this.props.onClear();
+  };
+
   handleConfirm = () => {
     this.didPressConfirm = true;
     this.props.onConfirm(this.state.currentDate);
@@ -93,8 +102,10 @@ export class DateTimePickerModal extends React.PureComponent {
   render() {
     const {
       cancelTextIOS,
+      customTextIOS,
       confirmTextIOS,
       customCancelButtonIOS,
+      customClearButtonIOS,
       customConfirmButtonIOS,
       customHeaderIOS,
       customPickerIOS,
@@ -106,6 +117,7 @@ export class DateTimePickerModal extends React.PureComponent {
       modalPropsIOS,
       pickerContainerStyleIOS,
       onCancel,
+      onClear,
       onConfirm,
       onChange,
       onHide,
@@ -113,6 +125,7 @@ export class DateTimePickerModal extends React.PureComponent {
     } = this.props;
 
     const ConfirmButtonComponent = customConfirmButtonIOS || ConfirmButton;
+    const ClearButtonComponent = customClearButtonIOS || ClearButton;
     const CancelButtonComponent = customCancelButtonIOS || CancelButton;
     const HeaderComponent = customHeaderIOS || Header;
     const PickerComponent = customPickerIOS || DateTimePicker;
@@ -148,6 +161,11 @@ export class DateTimePickerModal extends React.PureComponent {
             label={confirmTextIOS}
           />
         </View>
+        <ClearButtonComponent
+          isDarkModeEnabled={isDarkModeEnabled}
+          onPress={this.handleClear}
+          label={clearTextIOS}
+        />
         <CancelButtonComponent
           isDarkModeEnabled={isDarkModeEnabled}
           onPress={this.handleCancel}
@@ -234,6 +252,55 @@ export const confirmButtonStyles = StyleSheet.create({
     color: BUTTON_FONT_COLOR,
     fontSize: BUTTON_FONT_SIZE,
     fontWeight: BUTTON_FONT_WEIGHT,
+    backgroundColor: "transparent",
+  },
+});
+
+export const ClearButton = ({
+  isDarkModeEnabled,
+  onPress,
+  label,
+  style = clearButtonStyles,
+}) => {
+  const themedButtonStyle = isDarkModeEnabled
+    ? clearButtonStyles.buttonDark
+    : clearButtonStyles.buttonLight;
+  const underlayColor = isDarkModeEnabled
+    ? HIGHLIGHT_COLOR_DARK
+    : HIGHLIGHT_COLOR_LIGHT;
+  return (
+    <TouchableHighlight
+      style={[style.button, themedButtonStyle]}
+      underlayColor={underlayColor}
+      onPress={onPress}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+    >
+      <Text style={style.text}>{label}</Text>
+    </TouchableHighlight>
+  );
+};
+
+export const clearButtonStyles = StyleSheet.create({
+  button: {
+    borderRadius: BORDER_RADIUS,
+    height: 57,
+    marginBottom: 8,
+    justifyContent: "center",
+  },
+  buttonLight: {
+    backgroundColor: BACKGROUND_COLOR_LIGHT,
+  },
+  buttonDark: {
+    backgroundColor: BACKGROUND_COLOR_DARK,
+  },
+  text: {
+    padding: 10,
+    textAlign: "center",
+    color: BUTTON_FONT_COLOR,
+    fontSize: BUTTON_FONT_SIZE,
+    fontWeight: "600",
     backgroundColor: "transparent",
   },
 });
