@@ -1,6 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+  Appearance,
+} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Modal from "./Modal";
 import { isIphoneX } from "./utils";
@@ -50,7 +56,7 @@ export class DateTimePickerModal extends React.PureComponent {
     headerTextIOS: "Pick a date",
     modalPropsIOS: {},
     date: new Date(),
-    isDarkModeEnabled: false,
+    isDarkModeEnabled: undefined,
     isVisible: false,
     pickerContainerStyleIOS: {},
   };
@@ -123,6 +129,13 @@ export class DateTimePickerModal extends React.PureComponent {
       onHide,
       ...otherProps
     } = this.props;
+    const isAppearanceModuleAvailable = !!(
+      Appearance && Appearance.getColorScheme
+    );
+    const _isDarkModeEnabled =
+      isDarkModeEnabled === undefined && isAppearanceModuleAvailable
+        ? Appearance.getColorScheme() === "dark"
+        : isDarkModeEnabled || false;
 
     const ConfirmButtonComponent = customConfirmButtonIOS || ConfirmButton;
     const ClearButtonComponent = customClearButtonIOS || ClearButton;
@@ -130,7 +143,7 @@ export class DateTimePickerModal extends React.PureComponent {
     const HeaderComponent = customHeaderIOS || Header;
     const PickerComponent = customPickerIOS || DateTimePicker;
 
-    const themedContainerStyle = isDarkModeEnabled
+    const themedContainerStyle = _isDarkModeEnabled
       ? pickerStyles.containerDark
       : pickerStyles.containerLight;
 
@@ -156,7 +169,7 @@ export class DateTimePickerModal extends React.PureComponent {
             onChange={this.handleChange}
           />
           <ConfirmButtonComponent
-            isDarkModeEnabled={isDarkModeEnabled}
+            isDarkModeEnabled={_isDarkModeEnabled}
             onPress={this.handleConfirm}
             label={confirmTextIOS}
           />
@@ -167,7 +180,7 @@ export class DateTimePickerModal extends React.PureComponent {
           label={clearTextIOS}
         />
         <CancelButtonComponent
-          isDarkModeEnabled={isDarkModeEnabled}
+          isDarkModeEnabled={_isDarkModeEnabled}
           onPress={this.handleCancel}
           label={cancelTextIOS}
         />
